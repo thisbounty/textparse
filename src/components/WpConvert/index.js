@@ -31,12 +31,24 @@ export default class WpConvert extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({ input: event.target.value });
-    const markup = WpConvert.clean(event.target.value);
-    this.setState({ output: markup });
+    const text = event.target.value;
+    this.setState({ input: text });
+    this.setState({ output: WpConvert.format(WpConvert.clean(text)) });
   }
 
   static clean(text) {
     return text.replace('\n\n\n', '\n\n');
+  }
+
+  static format(text) {
+    let firstPageFlag = false;
+    let counter = 0;
+    text.split('\n').forEach((line) => {
+      if (!firstPageFlag) {
+        firstPageFlag = true;
+      }
+      console.log(`${line} ${counter}`);
+      counter += 1;
+    });
   }
 }
