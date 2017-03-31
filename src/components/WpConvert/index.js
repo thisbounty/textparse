@@ -32,6 +32,11 @@ export default class WpConvert extends React.Component {
 
   handleChange(event) {
     this.setState({ input: event.target.value });
-    this.setState({ output: event.target.value });
+    const markup = WpConvert.clean(event.target.value);
+    this.setState({ output: markup });
+  }
+
+  static clean(text) {
+    return text.replace('\n\n\n', '\n\n');
   }
 }
