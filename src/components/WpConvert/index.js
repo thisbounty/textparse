@@ -37,18 +37,28 @@ export default class WpConvert extends React.Component {
   }
 
   static clean(text) {
-    return text.replace('\n\n\n', '\n\n');
+    return text.replace('\n\n\n', '\n\n').replace('\n\n', '\n');
   }
 
   static format(text) {
-    let firstPageFlag = false;
+    let firstPageFlag = true;
     let counter = 0;
+    let formattedText = '';
     text.split('\n').forEach((line) => {
-      if (!firstPageFlag) {
-        firstPageFlag = true;
+      if (line.length === 0) {
+        return;
       }
-      console.log(`${line} ${counter}`);
+      if (firstPageFlag && counter === 2) {
+        firstPageFlag = false;
+        formattedText += '<!--next page-->\n';
+        counter = 0;
+      } else if (!firstPageFlag && counter === 1) {
+        formattedText += '<!--next page-->\n';
+        counter = 0;
+      }
       counter += 1;
+      formattedText += `${line}\n\n`;
     });
+    return formattedText;
   }
 }
