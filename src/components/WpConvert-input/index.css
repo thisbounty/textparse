@@ -1,2 +1,11 @@
-.WpConvert
-  background-color: transparent
+.WpConvert-input
+  float:left;
+  margin-left:40px;
+
+.WpConvert-input-label
+  display:block;
+
+.WpConvert-input-textArea
+  display:block;
+  height:60vh;
+  width:40vw;

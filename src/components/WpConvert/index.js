@@ -8,8 +8,8 @@ export default class WpConvert extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: 'test',
-      outpt: 'test',
+      input: '',
+      outpt: '',
     };
 
     this.handleChange = this.handleChange.bind(this);

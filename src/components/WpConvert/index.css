@@ -1,9 +1,2 @@
-.WpConvert-input-label
-  display:block;
-
-.WpConvert-input-textArea
-  display:block;
-  height:60vh;
-  width:40vw;
-
-
+.WpConvert
+  background-color: transparent
