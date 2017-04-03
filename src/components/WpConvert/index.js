@@ -50,23 +50,28 @@ export default class WpConvert extends React.Component {
   clearLineLoopData() {
     this.lineLoopData = {
       firstPageFlag: true,
+      titlePrintedFlag: false,
       counter: 0,
+      lineInProcess: '',
       formattedText: '',
     };
   }
 
   formatLine(line) {
-    if (!WpConvert.validateLine(line)) {
+    this.lineLoopData.lineInProcess = line;
+    if (!this.validateLine()) {
       return;
     }
+    // @TODO: New line
     this.topShortCodes();
-    this.addPageBreak(line);
+    this.addPageBreak();
+    this.formatTitle();
     this.lineLoopData.counter += 1;
-    this.lineLoopData.formattedText += `${line}\n\n`;
+    this.lineLoopData.formattedText += `${this.lineLoopData.lineInProcess}\n\n`;
   }
 
-  static validateLine(line) {
-    return (line.trim().length > 0);
+  validateLine() {
+    return (this.lineLoopData.lineInProcess.trim().length > 0);
   }
 
   topShortCodes() {
@@ -77,14 +82,29 @@ export default class WpConvert extends React.Component {
     }
   }
 
+  formatTitle() {
+    if (!this.lineLoopData.titlePrintedFlag
+         && !this.lineLoopData.firstPageFlag
+         && this.lineLoopData.lineInProcess.length < 30) {
+      // titles occur on inner pages only
+      // 30 character limit is a magic number, used to exclude paragraphs
+      this.lineLoopData.lineInProcess = `[post_page_title]${this.lineLoopData.lineInProcess}[/post_page_title]`;
+      this.lineLoopData.titlePrintedFlag = true;
+    }
+  }
+
   addPageBreak() {
     if (this.lineLoopData.firstPageFlag && this.lineLoopData.counter === 2) {
+      // first page has an intro of 2 paragraphs and title
       this.lineLoopData.firstPageFlag = false;
       this.lineLoopData.formattedText += '<!--next page-->\n';
       this.lineLoopData.counter = 0;
-    } else if (!this.lineLoopData.firstPageFlag && this.lineLoopData.counter === 1) {
+      this.lineLoopData.titlePrintedFlag = false;
+    } else if (!this.lineLoopData.firstPageFlag && this.lineLoopData.counter === 2) {
+      // inner pages only have 1 paragraph
       this.lineLoopData.formattedText += '<!--next page-->\n';
       this.lineLoopData.counter = 0;
+      this.lineLoopData.titlePrintedFlag = false;
     }
   }
 }
