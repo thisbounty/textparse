@@ -44,6 +44,7 @@ export default class WpConvert extends React.Component {
   formatText(text) {
     this.clearLineLoopData();
     text.split('\n').forEach((line) => { this.formatLine(line); });
+    this.afterArticle();
     return this.lineLoopData.formattedText;
   }
 
@@ -62,7 +63,6 @@ export default class WpConvert extends React.Component {
     if (!this.validateLine()) {
       return;
     }
-    // @TODO: New line
     this.topShortCodes();
     this.addPageBreak();
     this.formatTitle();
@@ -97,14 +97,25 @@ export default class WpConvert extends React.Component {
     if (this.lineLoopData.firstPageFlag && this.lineLoopData.counter === 2) {
       // first page has an intro of 2 paragraphs and title
       this.lineLoopData.firstPageFlag = false;
+      this.beforeFirstPagination();
       this.lineLoopData.formattedText += '<!--next page-->\n';
       this.lineLoopData.counter = 0;
       this.lineLoopData.titlePrintedFlag = false;
     } else if (!this.lineLoopData.firstPageFlag && this.lineLoopData.counter === 2) {
       // inner pages only have 1 paragraph
+      this.beforeInnerPagination();
       this.lineLoopData.formattedText += '<!--next page-->\n';
       this.lineLoopData.counter = 0;
       this.lineLoopData.titlePrintedFlag = false;
     }
+  }
+  beforeFirstPagination() {
+    this.lineLoopData.formattedText += '[sc name=\'default_lower_ad\']\n';
+  }
+  beforeInnerPagination() {
+    this.lineLoopData.formattedText += '[image_shortcode]\n[sc name=\'default_lower_ad\']\n';
+  }
+  afterArticle() {
+    this.lineLoopData.formattedText += '[sc name="direct_default_lower_ad" ]\n';
   }
 }
