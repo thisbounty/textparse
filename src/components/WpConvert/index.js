@@ -108,7 +108,7 @@ export default class WpConvert extends React.Component {
     }
   }
   beforeFirstPagination() {
-    this.lineLoopData.formattedText += '[sc name=\'default_lower_ad\']\n';
+    this.lineLoopData.formattedText += '[image_shortcode]\n[sc name=\'default_lower_ad\']\n';
   }
   beforeInnerPagination() {
     this.lineLoopData.formattedText += '[image_shortcode]\n[sc name=\'default_lower_ad\']\n';
