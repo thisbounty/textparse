@@ -63,8 +63,8 @@ export default class WpConvert extends React.Component {
     if (!this.validateLine()) {
       return;
     }
-    this.topShortCodes();
     this.addPageBreak();
+    this.topShortCodes();
     this.formatTitle();
     this.lineLoopData.counter += 1;
     this.lineLoopData.formattedText += `${this.lineLoopData.lineInProcess}\n\n`;
