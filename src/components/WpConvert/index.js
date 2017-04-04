@@ -85,7 +85,7 @@ export default class WpConvert extends React.Component {
   formatTitle() {
     if (!this.lineLoopData.titlePrintedFlag
          && !this.lineLoopData.firstPageFlag
-         && this.lineLoopData.lineInProcess.length < 30) {
+         && this.lineLoopData.lineInProcess.length < 70) {
       // titles occur on inner pages only
       // 30 character limit is a magic number, used to exclude paragraphs
       this.lineLoopData.lineInProcess = `[post_page_title]${this.lineLoopData.lineInProcess}[/post_page_title]`;
