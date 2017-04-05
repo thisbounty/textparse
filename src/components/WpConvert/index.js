@@ -12,7 +12,6 @@ export default class WpConvert extends React.Component {
       outpt: '',
     };
 
-    this.lineLoopData = {};
     this.handleChange = this.handleChange.bind(this);
   }
   render() {
@@ -34,31 +33,29 @@ export default class WpConvert extends React.Component {
   handleChange(event) {
     const text = event.target.value;
     this.setState({ input: text });
-    this.setState({ output: WpConvert.parse(text) });
+    this.setState({ output: text });
+    WpConvert.parse();
   }
 
-  static parse(text) {
-    return WpConvert.topArticle(
-       bottomArticle(
-         topPage(
-           bottomPage(
-             images(
-               titles(
-                pageBreaks(text)
-              )
-            )
-          )
-        )
-      )
-    );
+  parse() {
+    return this
+      .pageBreaks()
+      .titles()
+      .images()
+      .bottomPage()
+      .topPage()
+      .bottomArticle()
+      .topArticle();
   }
 
-  static pageBreaks(text) {
+  static pageBreaks() {
     //matches text with characters of 70 or more, and ending with a pagebreak
-    return text.replace(/.{70,}\n$/,function(match){
-      return match
-    })
+    this.state.output.replace(/.{70,}\n$/,function(match){
+      return match+'\n<!--next page-->';
+    });
+    return this;
   }
+
 
   static clean(text) {
     return text.replace('\n\n\n', '\n\n').replace('\n\n', '\n');
