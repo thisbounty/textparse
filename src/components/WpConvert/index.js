@@ -37,34 +37,16 @@ export default class WpConvert extends React.Component {
   }
 
   static parse(text) {
-    return WpConvert.pageBreaks(text);
+    return WpConvert.formatTitles(WpConvert.insertPageBreaks(text));
   }
 
-  static pageBreaks(text) {
+  static insertPageBreaks(text) {
     // matches text with characters of 70 or more, and ending with a pagebreak
     return text.replace(/.{70,}\n/, match => `${match}\n<!--next page-->`);
   }
 
-
-  static clean(text) {
-    return text.replace('\n\n\n', '\n\n').replace('\n\n', '\n');
-  }
-
-  formatText(text) {
-    this.clearLineLoopData();
-    text.split('\n').forEach((line) => { this.formatLine(line); });
-    this.afterArticle();
-    return this.lineLoopData.formattedText;
-  }
-
-  clearLineLoopData() {
-    this.lineLoopData = {
-      firstPageFlag: true,
-      titlePrintedFlag: false,
-      counter: 0,
-      lineInProcess: '',
-      formattedText: '',
-    };
+  static formatTitles(text) {
+    return text.replace(/^.{3,70}$/gm, match => `[post_page_title]${match}[/post_page_title]/g`);
   }
 
   formatLine(line) {
