@@ -37,75 +37,15 @@ export default class WpConvert extends React.Component {
   }
 
   static parse(text) {
-    return WpConvert.formatTitles(WpConvert.insertPageBreaks(text));
+    return WpConvert.insertPageBreaks(WpConvert.formatTitles(text));
   }
 
   static insertPageBreaks(text) {
     // matches text with characters of 70 or more, and ending with a pagebreak
-    return text.replace(/.{70,}\n/, match => `${match}\n<!--next page-->`);
+    return text.replace(/.{104,}\n/g, match => `${match}\n<!--next page-->\n`);
   }
 
   static formatTitles(text) {
-    return text.replace(/^.{3,70}$/gm, match => `[post_page_title]${match}[/post_page_title]/g`);
-  }
-
-  formatLine(line) {
-    this.lineLoopData.lineInProcess = line;
-    if (!this.validateLine()) {
-      return;
-    }
-    this.addPageBreak();
-    this.topShortCodes();
-    this.formatTitle();
-    this.lineLoopData.counter += 1;
-    this.lineLoopData.formattedText += `${this.lineLoopData.lineInProcess}\n\n`;
-  }
-
-  validateLine() {
-    return (this.lineLoopData.lineInProcess.trim().length > 0);
-  }
-
-  topShortCodes() {
-    if (this.lineLoopData.firstPageFlag && this.lineLoopData.counter === 0) {
-      this.lineLoopData.formattedText += '[sc name="direct_default_top_ad" ]\n[sc name="default_top_ad" ]\n\n';
-    } else if (!this.lineLoopData.firstPageFlag && this.lineLoopData.counter === 0) {
-      this.lineLoopData.formattedText += '[sc name="default_top_ad" ]\n\n';
-    }
-  }
-
-  formatTitle() {
-    if (!this.lineLoopData.titlePrintedFlag && this.lineLoopData.lineInProcess.length < 70) {
-      // titles occur on inner pages only
-      // 30 character limit is a magic number, used to exclude paragraphs
-      this.lineLoopData.lineInProcess = `[post_page_title]${this.lineLoopData.lineInProcess}[/post_page_title]`;
-      this.lineLoopData.titlePrintedFlag = true;
-    }
-  }
-
-  addPageBreak() {
-    if (this.lineLoopData.firstPageFlag && this.lineLoopData.counter === 2) {
-      // first page has an intro of 2 paragraphs and title
-      this.lineLoopData.firstPageFlag = false;
-      this.beforeFirstPagination();
-      this.lineLoopData.formattedText += '<!--next page-->\n';
-      this.lineLoopData.counter = 0;
-      this.lineLoopData.titlePrintedFlag = false;
-    } else if (!this.lineLoopData.firstPageFlag && this.lineLoopData.counter === 2) {
-      // inner pages only have 1 paragraph
-      this.beforeInnerPagination();
-      this.lineLoopData.formattedText += '<!--next page-->\n';
-      this.lineLoopData.counter = 0;
-      this.lineLoopData.titlePrintedFlag = false;
-    }
-  }
-  beforeFirstPagination() {
-    this.lineLoopData.formattedText += '\n[sc name=\'default_lower_ad\']\n';
-  }
-  beforeInnerPagination() {
-    this.lineLoopData.formattedText += '\n[sc name=\'default_lower_ad\']\n';
-  }
-  afterArticle() {
-    this.beforeInnerPagination();
-    this.lineLoopData.formattedText += '[sc name="direct_default_lower_ad" ]\n';
+    return text.replace(/^.{3,70}$/gm, match => `[post_page_title]${match}[/post_page_title]`);
   }
 }
