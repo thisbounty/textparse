@@ -4,7 +4,8 @@
       "neutrino-preset-karma",
       "neutrino-preset-airbnb-base",
       "neutrino-preset-react",
-      "neutrino-preset-postcss"
+      "neutrino-preset-postcss",
+	  "./src/presets/lint-preset.js"
     ]
   },
   "scripts": {
@@ -12,7 +13,7 @@
     "test": "neutrino test",
     "build": "neutrino build",
     "server": "npm-watch",
-    "ssr": "neutrino build; babel-node server/index.js"
+    "ssr": "node main.js"
   },
   "watch": {
     "ssr": "{src,test}/*.js"
@@ -32,6 +33,7 @@
   },
   "dependencies": {
     "babel-plugin-transform-assets": "^0.2.0",
+    "google-images-scraper": "^1.0.9",
     "htmltidy": "^0.0.6",
     "lodash": "^4.17.4",
     "npm-watch": "^0.1.8",

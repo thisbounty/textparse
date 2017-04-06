@@ -1,7 +1,6 @@
 import React from 'react';
 import WpConvertInput from '../WpConvert-input/index';
 import WpConvertOutput from '../WpConvert-output/index';
-
 import styles from './index.css';
 
 export default class WpConvert extends React.Component {
