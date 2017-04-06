@@ -17,7 +17,6 @@ fs.readFile('./build/index.html', 'utf8', function (err, html) {
     });
     // start serving express
     var app = express();
-    app.use(express.static(process.cwd() + '/build'));
 
     app.get('/ssr', function (req, res) {
       tidy.tidy(transformed.document.documentElement.innerHTML, {doctype: 'html5',hideComments: false, indent: true},
@@ -25,9 +24,11 @@ fs.readFile('./build/index.html', 'utf8', function (err, html) {
         res.send(html);
       });
     });
-
+	
+	app.use(express.static(process.cwd() + '/build'));
+	
     app.listen(3000, function () {
-      console.log('SSR listening on port 3000!')
+      console.log('SSR listening on port 3000!\nMake sure you are not viewing a static page')
     })
   });
 });

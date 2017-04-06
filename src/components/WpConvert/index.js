@@ -1,8 +1,7 @@
 import React from 'react';
 import WpConvertInput from '../WpConvert-input/index';
 import WpConvertOutput from '../WpConvert-output/index';
-
-require('./index.css');
+import styles from './index.css';
 
 export default class WpConvert extends React.Component {
   constructor(props) {
@@ -16,7 +15,7 @@ export default class WpConvert extends React.Component {
   }
   render() {
     return (
-      <div id="WpConvert" className="WpConvert">
+      <div id="WpConvert" className={styles.WpConvert}>
         {this.renderInput(this.state.input)}
         {WpConvert.renderOutput(this.state.output)}
       </div>

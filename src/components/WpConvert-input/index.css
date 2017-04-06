@@ -1,11 +1,11 @@
-.WpConvert-input
+.WpConvert_input
   float:left;
   margin-left:40px;
 
-.WpConvert-input-label
+.WpConvert_input_label
   display:block;
 
-.WpConvert-input-textArea
+.WpConvert_input_textArea
   display:block;
   height:60vh;
   width:40vw;
