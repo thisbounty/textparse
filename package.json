@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "neutrino start",
+    "test": "neutrino test",
     "build": "neutrino build",
     "server": "npm-watch",
     "ssr": "neutrino build; babel-node server/index.js"
@@ -35,7 +36,9 @@
     "lodash": "^4.17.4",
     "npm-watch": "^0.1.8",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-addons": "^0.9.1-deprecated",
+    "react-dom": "^15.4.2",
+    "react-unit": "^2.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.0",

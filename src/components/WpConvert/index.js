@@ -33,27 +33,16 @@ export default class WpConvert extends React.Component {
   handleChange(event) {
     const text = event.target.value;
     this.setState({ input: text });
-    this.setState({ output: text });
-    WpConvert.parse();
+    this.setState({ output: WpConvert.parse(text) });
   }
 
-  parse() {
-    return this
-      .pageBreaks()
-      .titles()
-      .images()
-      .bottomPage()
-      .topPage()
-      .bottomArticle()
-      .topArticle();
+  static parse(text) {
+    return WpConvert.pageBreaks(text);
   }
 
-  static pageBreaks() {
-    //matches text with characters of 70 or more, and ending with a pagebreak
-    this.state.output.replace(/.{70,}\n$/,function(match){
-      return match+'\n<!--next page-->';
-    });
-    return this;
+  static pageBreaks(text) {
+    // matches text with characters of 70 or more, and ending with a pagebreak
+    return text.replace(/.{70,}\n/, match => `${match}\n<!--next page-->`);
   }
 
 
