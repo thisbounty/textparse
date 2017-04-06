@@ -12,8 +12,8 @@ const dummy = {
 const shortcodes = {
   pageBreak: '<!--next page-->',
   title: 'post_page_title',
-  topPage: 'sc name="direct_default_top_ad"',
-  bottomPage: 'sc name="direct_default_lower_ad',
+  topArticle: 'sc name="direct_default_top_ad"',
+  bottomArticle: 'sc name="direct_default_lower_ad"',
 };
 
 let wp = TestUtils.renderIntoDocument(<WpConvert />);
@@ -39,9 +39,9 @@ describe('WpConvert.formatTitles', () => {
   });
 });
 
-describe('WpConvert.pageShortcodes', () => {
-  it('should insert page shortcodes at the top and bottom of the page', () => {
-    const pageShortcodes = WpConvert.insertPageShortcodes(wp.state.input);
-    assert.equal(pageShortcodes, `${shortcodes.topPage}\n${wp.state.input}\n${shortcodes.bottomPage}`);
+describe('WpConvert.articleShortcodes', () => {
+  it('should insert article shortcodes at the top and bottom of the article', () => {
+    const article = WpConvert.insertArticleShortcodes(wp.state.input);
+    assert.equal(article, `[${shortcodes.topArticle}]\n${wp.state.input}\n[${shortcodes.bottomArticle}]`);
   });
 });

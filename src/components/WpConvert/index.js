@@ -37,7 +37,8 @@ export default class WpConvert extends React.Component {
   }
 
   static parse(text) {
-    return WpConvert.insertPageBreaks(WpConvert.formatTitles(text));
+    const _ = WpConvert;
+    return _.insertArticleShortcodes(_.insertPageBreaks(_.formatTitles(text)));
   }
 
   static insertPageBreaks(text) {
@@ -47,5 +48,9 @@ export default class WpConvert extends React.Component {
 
   static formatTitles(text) {
     return text.replace(/^.{3,70}$/gm, match => `[post_page_title]${match}[/post_page_title]`);
+  }
+
+  static insertArticleShortcodes(text) {
+    return `[sc name="direct_default_top_ad"]\n${text}\n[sc name="direct_default_lower_ad"]`;
   }
 }
