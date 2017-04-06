@@ -5,7 +5,7 @@
       "neutrino-preset-airbnb-base",
       "neutrino-preset-react",
       "neutrino-preset-postcss",
-	  "./src/presets/lint-preset.js"
+      "./src/presets/lint-preset.js"
     ]
   },
   "scripts": {
@@ -33,8 +33,8 @@
   },
   "dependencies": {
     "babel-plugin-transform-assets": "^0.2.0",
-    "google-images-scraper": "^1.0.9",
     "htmltidy": "^0.0.6",
+    "images-scraper": "^2.0.11",
     "lodash": "^4.17.4",
     "npm-watch": "^0.1.8",
     "react": "^15.4.2",
