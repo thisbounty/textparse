@@ -49,12 +49,23 @@ describe('WpConvert.articleShortcodes', () => {
 });
 
 describe('WpConvert.lowerPageShortcodes', () => {
-  it('should insert two lower page shortcodes at the bottom of two pages', () => {
+  it('should insert two lower page shortcodes', () => {
     const page = WpConvert.insertLowerPageShortcodes(wp.state.input);
     assert.notEqual(page, wp.state.input);
     // try this regex if more specific matching required: `^.{104,}\n\[${shortcodes.lowerPage}\]$`
     // also try to assign to a variable first, and then put to regex, to rule out template interfering with parsing, like $ symbols
     const regex = new RegExp(shortcodes.lowerPage,"gm");
+    assert.equal((page.match(regex)||[]).length, 2);
+  });
+});
+
+describe('WpConvert.topPageShortcodes', () => {
+  it('should insert two top page shortcodes', () => {
+    const page = WpConvert.insertTopPageShortcodes(wp.state.input);
+    assert.notEqual(page, wp.state.input);
+    // try this regex if more specific matching required: `^.{104,}\n\[${shortcodes.lowerPage}\]$`
+    // also try to assign to a variable first, and then put to regex, to rule out template interfering with parsing, like $ symbols
+    const regex = new RegExp(shortcodes.topPage,"gm");
     assert.equal((page.match(regex)||[]).length, 2);
   });
 });
