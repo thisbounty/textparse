@@ -6,9 +6,8 @@
   ],
   "env": {
     "node": {
-      "plugins": [["transform-assets", {
+      "plugins": [["babel-plugin-transform-require-ignore", {
         "extensions": ["css"],
-        "name": "[name].[ext]?[sha512:hash:base64:7]",
       }]]
     }
   }

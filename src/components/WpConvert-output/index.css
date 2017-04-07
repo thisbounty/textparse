@@ -1,11 +1,11 @@
-.WpConvert_output
+.WpConvert-output
   float:right;
   margin-right:40px;
 
-.WpConvert_output_label
+.WpConvert-output-label
   display:block;
 
-.WpConvert_output_textArea
+.WpConvert-output-textArea
   display:block;
   height:60vh;
   width:40vw;

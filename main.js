@@ -1,11 +1,11 @@
 const execSync = require('child_process').execSync;
 const os = require('os');
-var buildCommand = "BABEL_ENV=node neutrino build";
+var buildCommand = "neutrino build";
 var serverCommand = "BABEL_ENV=node babel-node server/index.js";
 var commandDelimeter ='; ';
 
 if(os.platform() == 'win32') {
-  buildCommand = "SET BABEL_ENV=node&& neutrino build";
+  buildCommand = "neutrino build";
   serverCommand = "SET BABEL_ENV=node&& babel-node server/index.js";
   commandDelimeter = '& ';
 }
