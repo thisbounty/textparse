@@ -13,7 +13,9 @@ const shortcodes = {
   pageBreak: '<!--next page-->',
   title: 'post_page_title',
   topArticle: 'sc name="direct_default_top_ad"',
-  bottomArticle: 'sc name="direct_default_lower_ad"',
+  lowerArticle: 'sc name="direct_default_lower_ad"',
+  topPage:'sc name="default_top_ad"',
+  lowerPage:'sc name="default_lower_ad"'
 };
 
 let wp = TestUtils.renderIntoDocument(<WpConvert />);
@@ -29,7 +31,7 @@ describe('WpConvert.insertPageBreaks', () => {
 });
 
 describe('WpConvert.formatTitles', () => {
-  it('should add title shortcodes around lines that have less than 70 characters', () => {
+  it('should add two title shortcodes around two lines that have less than 70 characters', () => {
     const titles = WpConvert.formatTitles(wp.state.input);
     assert.notEqual(titles, wp.state.input);
     // with simple regex, count will be: 2 shortcodes, for opening and closing * 2 titles in dummy input, so 4
@@ -40,8 +42,19 @@ describe('WpConvert.formatTitles', () => {
 });
 
 describe('WpConvert.articleShortcodes', () => {
-  it('should insert article shortcodes at the top and bottom of the article', () => {
+  it('should insert one top and one lower article shortcodes at the top and bottom of the article', () => {
     const article = WpConvert.insertArticleShortcodes(wp.state.input);
-    assert.equal(article, `[${shortcodes.topArticle}]\n${wp.state.input}\n[${shortcodes.bottomArticle}]`);
+    assert.equal(article, `[${shortcodes.topArticle}]\n${wp.state.input}\n[${shortcodes.lowerArticle}]`);
+  });
+});
+
+describe('WpConvert.lowerPageShortcodes', () => {
+  it('should insert two lower page shortcodes at the bottom of two pages', () => {
+    const page = WpConvert.insertLowerPageShortcodes(wp.state.input);
+    assert.notEqual(page, wp.state.input);
+    // try this regex if more specific matching required: `^.{104,}\n\[${shortcodes.lowerPage}\]$`
+    // also try to assign to a variable first, and then put to regex, to rule out template interfering with parsing, like $ symbols
+    const regex = new RegExp(shortcodes.lowerPage,"gm");
+    assert.equal((page.match(regex)||[]).length, 2);
   });
 });

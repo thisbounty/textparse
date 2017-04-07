@@ -37,19 +37,27 @@ export default class WpConvert extends React.Component {
 
   static parse(text) {
     const _ = WpConvert;
-    return _.insertArticleShortcodes(_.insertPageBreaks(_.formatTitles(text)));
+    return _.insertArticleShortcodes(_.insertLowerPageShortcodes((_.insertPageBreaks(_.formatTitles(text)))));
   }
 
   static insertPageBreaks(text) {
-    // matches text with characters of 70 or more, and ending with a pagebreak
+    // match text with characters of 104 or more, and ending with a \n
+    // 70 character min, with two title tags of 17 characters each
+    // \n in regex so last page has no pagebreak
     return text.replace(/.{104,}\n/g, match => `${match}\n<!--next page-->\n`);
   }
 
   static formatTitles(text) {
+    //match lines with 3 to 70 characters, for titles, multiline to get them all
     return text.replace(/^.{3,70}$/gm, match => `[post_page_title]${match}[/post_page_title]`);
   }
 
   static insertArticleShortcodes(text) {
     return `[sc name="direct_default_top_ad"]\n${text}\n[sc name="direct_default_lower_ad"]`;
+  }
+
+  static insertLowerPageShortcodes(text) {
+    // match text with more than 104 characters
+    return text.replace(/^.{104,}$/gm, match => `${match}\n\n[sc name="default_lower_ad"]`);
   }
 }
