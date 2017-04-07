@@ -3,6 +3,7 @@ import React from "react";
 import site from '../src/index.js';
 import jsdom from "jsdom";
 import tidy from "htmltidy";
+import Scraper from 'images-scraper';
 
 const fs = require('fs');
 
@@ -24,6 +25,19 @@ fs.readFile('./build/index.html', 'utf8', function (err, html) {
         res.send(html);
       });
     });
+	
+	app.post('/images', function (req, res) {
+	  var scraper = new Scraper.Google();
+	  scraper.list({
+		keyword: req.body.keyword,
+		num: 30,
+		detail: false
+	  }).then(function(result) {
+		res.send(JSON.stringify(result));
+	  }).catch(function(err) {
+		res.send(JSON.stringify(err));
+	  });
+	});
 	
 	app.use(express.static(process.cwd() + '/build'));
 	
