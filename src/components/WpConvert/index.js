@@ -1,6 +1,7 @@
 import React from 'react';
 import WpConvertInput from '../WpConvert-input/index';
 import WpConvertOutput from '../WpConvert-output/index';
+import WpConvertImage from '../WpConvert-image/index';
 
 require('./index.css');
 
@@ -10,6 +11,7 @@ export default class WpConvert extends React.Component {
     this.state = {
       input: '',
       outpt: '',
+      keyword: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -19,6 +21,7 @@ export default class WpConvert extends React.Component {
       <div id="WpConvert" className="WpConvert">
         {this.renderInput(this.state.input)}
         {WpConvert.renderOutput(this.state.output)}
+        {WpConvert.renderImage(this.state.keyword)}
       </div>
     );
   }
@@ -28,6 +31,10 @@ export default class WpConvert extends React.Component {
 
   static renderOutput(p) {
     return <WpConvertOutput text={p} />;
+  }
+
+  static renderImage(keyword) {
+    return <WpConvertImage text={keyword} />;
   }
 
   handleChange(event) {
