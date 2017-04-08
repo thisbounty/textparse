@@ -12,7 +12,7 @@ fs.readFile('./build/index.html', 'utf8', function (err, html) {
   // parse html file into a DOM to allow for selectors, append, prepend
   jsdom.env(html, function(err, window) {
     // apply site transforms, an array of callbacks that contain
-    var transformed;
+    var transformed = window;
     site.transforms.forEach(function(transform){
       transformed = transform(window);
     });
