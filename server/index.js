@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import React from "react";
 import site from '../src/index.js';
 import jsdom from "jsdom";
@@ -26,20 +27,21 @@ fs.readFile('./build/index.html', 'utf8', function (err, html) {
       });
     });
 
-	app.post('/images', function (req, res) {
-	  var scraper = new Scraper.Google();
-	  scraper.list({
-		keyword: req.body.keyword,
-		num: 30,
-		detail: false
-	  }).then(function(result) {
-		res.send(JSON.stringify(result));
-	  }).catch(function(err) {
-		res.send(JSON.stringify(err));
-	  });
-	});
+    app.use(bodyParser.json());
+    app.post('/images', function (req, res) {
+      var scraper = new Scraper.Google();
+      scraper.list({
+        keyword: req.body.keyword,
+        num: 30,
+        detail: false
+      }).then(function(result) {
+        res.send(JSON.stringify(result));
+      }).catch(function(err) {
+        res.send(JSON.stringify(err));
+      });
+    });
 
-	app.use(express.static(process.cwd() + '/build'));
+    app.use(express.static(process.cwd() + '/build'));
 
     app.listen(3000, function () {
       console.log('SSR listening on port 3000!\nMake sure you are not viewing a static page')
