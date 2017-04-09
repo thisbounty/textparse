@@ -21,7 +21,7 @@ export default class WpConvert extends React.Component {
       <div id="WpConvert" className="WpConvert">
         {this.renderInput(this.state.input)}
         {WpConvert.renderOutput(this.state.output)}
-        {WpConvert.renderImage(this.state.keyword)}
+        {this.renderImage(this.state.keyword)}
       </div>
     );
   }
@@ -33,14 +33,19 @@ export default class WpConvert extends React.Component {
     return <WpConvertOutput text={p} />;
   }
 
-  static renderImage(keyword) {
-    return <WpConvertImage text={keyword} />;
+  renderImage(p) {
+    return <WpConvertImage text={p} onChange={ this.handleImageChange }/>;
   }
 
   handleChange(event) {
     const text = event.target.value;
     this.setState({ input: text });
     this.setState({ output: WpConvert.parse(text) });
+  }
+
+  handleImageChange(event) {
+    const text = event.target.value;
+    this.setState({ keyword: text });
   }
 
   static parse(text) {
