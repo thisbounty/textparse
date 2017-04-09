@@ -15,6 +15,9 @@ export default class WpConvert extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
+    this.handleImageRequest = this.handleImageRequest.bind(this);
+
   }
   render() {
     return (
@@ -34,7 +37,7 @@ export default class WpConvert extends React.Component {
   }
 
   renderImage(p) {
-    return <WpConvertImage text={p} onChange={ this.handleImageChange }/>;
+    return <WpConvertImage text={p} onChange={ this.handleImageChange } onKeyDown={ this.handleImageRequest }/>;
   }
 
   handleChange(event) {
@@ -46,6 +49,14 @@ export default class WpConvert extends React.Component {
   handleImageChange(event) {
     const text = event.target.value;
     this.setState({ keyword: text });
+  }
+
+  handleImageRequest(event) {
+    if(event.keyCode == 13) {
+      WpConvert.imageRequest(this.state.keyword).then((resp) => {
+        console.log(resp);
+      });
+    }
   }
 
   static parse(text) {
@@ -91,5 +102,18 @@ export default class WpConvert extends React.Component {
   static insertArticleShortcodes(text) {
     // need shortcodes at the top and bottom of the entire article, simple concat
     return `[sc name="direct_default_top_ad"]\n${text}\n[sc name="direct_default_lower_ad"]`;
+  }
+
+  static imageRequest(text) {
+    return new Promise(function(resolve, reject) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'http://localhost:3000/images', true);
+      xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+      // send the collected data as JSON
+      xhr.send(JSON.stringify({keyword:text}));
+      xhr.onloadend = function (object) {
+        resolve(object.currentTarget.response);
+      };
+    });
   }
 }
