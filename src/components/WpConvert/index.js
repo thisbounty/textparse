@@ -53,8 +53,9 @@ export default class WpConvert extends React.Component {
 
   handleImageRequest(event) {
     if(event.keyCode == 13) {
+      const _wp=this;
       WpConvert.imageRequest(this.state.keyword).then((resp) => {
-        console.log(resp);
+        _wp.setState({ output:_wp.insertImageTags(_wp.state.output,resp) })
       });
     }
   }
@@ -112,8 +113,18 @@ export default class WpConvert extends React.Component {
       // send the collected data as JSON
       xhr.send(JSON.stringify({keyword:text}));
       xhr.onloadend = function (object) {
-        resolve(object.currentTarget.response);
+        resolve(JSON.parse(object.currentTarget.response));
       };
     });
+  }
+
+  insertImageTags(text, images) {
+    // need to add a different image tag before each pagination
+    let sub=text;
+    console.log(images);
+    images.forEach(function(img) {
+      sub=sub.replace(/[^>]\n<!--next page-->/, `]\n<img src="${img.url}">\n<!--next page-->`);
+    });
+    return sub;
   }
 }
