@@ -17,6 +17,11 @@
   font-weight: normal
   font-style: normal
 
+.image-gallery
+  width: 80%
+  margin: 0 auto
+  max-width: 800px
+
 .image-gallery-fullscreen-button::before,
 .image-gallery-play-button::before,
 .image-gallery-left-nav::before,

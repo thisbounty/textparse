@@ -86,6 +86,10 @@ export default class WpConvert extends React.Component {
     }
   }
 
+  handleGalleryClick(event) {
+     console.log(event.target);
+  }
+
   static parse(text) {
     const _ = WpConvert;
     return _.insertArticleShortcodes(_.formatTitles(_.insertTopPageShortcodes(_.insertPageBreaks(_.insertLowerPageShortcodes(text)))));
