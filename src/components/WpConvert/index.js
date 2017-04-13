@@ -2,6 +2,8 @@ import React from 'react';
 import WpConvertInput from '../WpConvert-input/index';
 import WpConvertOutput from '../WpConvert-output/index';
 import WpConvertImage from '../WpConvert-image/index';
+import ImageGallery from 'react-image-gallery';
+import "../WpConvert-imageGallery/index.css";
 
 require('./index.css');
 
@@ -12,6 +14,20 @@ export default class WpConvert extends React.Component {
       input: '',
       outpt: '',
       keyword: '',
+      images:[
+        {
+          original: 'http://lorempixel.com/1000/600/nature/1/',
+          thumbnail: 'http://lorempixel.com/250/150/nature/1/',
+        },
+        {
+          original: 'http://lorempixel.com/1000/600/nature/2/',
+          thumbnail: 'http://lorempixel.com/250/150/nature/2/'
+        },
+        {
+          original: 'http://lorempixel.com/1000/600/nature/3/',
+          thumbnail: 'http://lorempixel.com/250/150/nature/3/'
+        }
+      ],
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -25,6 +41,7 @@ export default class WpConvert extends React.Component {
         {this.renderInput(this.state.input)}
         {WpConvert.renderOutput(this.state.output)}
         {this.renderImage(this.state.keyword)}
+        {this.renderGallery()}
       </div>
     );
   }
@@ -38,6 +55,15 @@ export default class WpConvert extends React.Component {
 
   renderImage(p) {
     return <WpConvertImage text={p} onChange={ this.handleImageChange } onKeyDown={ this.handleImageRequest }/>;
+  }
+
+  renderGallery() {
+    return (
+      <ImageGallery
+        items={this.state.images}
+        slideInterval={2000}
+        onClick = {this.handleGalleryClick}/>
+    );
   }
 
   handleChange(event) {
