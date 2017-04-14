@@ -28,11 +28,13 @@ export default class WpConvert extends React.Component {
           thumbnail: 'http://lorempixel.com/250/150/nature/3/'
         }
       ],
+      selectedImages:[]
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleImageChange = this.handleImageChange.bind(this);
     this.handleImageRequest = this.handleImageRequest.bind(this);
+    this.handleGalleryClick = this.handleGalleryClick.bind(this);
 
   }
   render() {
@@ -87,7 +89,9 @@ export default class WpConvert extends React.Component {
   }
 
   handleGalleryClick(event) {
-     console.log(event.target);
+    let images = this.state.selectedImages;
+    images.push(event.target.getAttribute('src'));
+    this.setState({selectedImages:images});
   }
 
   static parse(text) {
