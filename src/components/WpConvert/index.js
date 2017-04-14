@@ -93,7 +93,7 @@ export default class WpConvert extends React.Component {
   handleGalleryClick(event) {
     this.selectImage(event);
     this.renderAllThumbs();
-    this.parse(this.state.input);
+    WpConvert.parse(this.state.input);
   }
 
   static parse(text) {
@@ -171,8 +171,8 @@ export default class WpConvert extends React.Component {
   }
 
   renderAllThumbs() {
-    const thumbs = this.selectedImages.map((src) => {
-      <img src="{src}" />;
+    let thumbs = this.state.selectedImages.map((src, index) => {
+      return <li key={index}><img src={src} style={{width:'200px'}}/></li>;
     });
     this.thumbs = thumbs;
   }
