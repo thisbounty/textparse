@@ -143,7 +143,7 @@ export default class WpConvert extends React.Component {
   static imageRequest(text) {
     return new Promise(function(resolve, reject) {
       var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'http://localhost:3000/images', true);
+      xhr.open('POST', 'http://smuvit.com/images', true);
       xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
       // send the collected data as JSON
       xhr.send(JSON.stringify({keyword:text}));
@@ -177,7 +177,7 @@ export default class WpConvert extends React.Component {
 
   static parseImage(request) {
     return request.map((row) => {
-      return {original:row.url, thumbnail:row.thumb_url};
+      return {original:row.url, thumbnail:row.thumb};
     })
   }
 }
