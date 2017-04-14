@@ -28,7 +28,8 @@ export default class WpConvert extends React.Component {
           thumbnail: 'http://lorempixel.com/250/150/nature/3/'
         }
       ],
-      selectedImages:[]
+      selectedImages:[],
+      thumbs:null,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -44,6 +45,7 @@ export default class WpConvert extends React.Component {
         {WpConvert.renderOutput(this.state.output)}
         {this.renderImage(this.state.keyword)}
         {this.renderGallery()}
+        <ul>{this.thumbs}</ul>
       </div>
     );
   }
@@ -169,5 +171,9 @@ export default class WpConvert extends React.Component {
   }
 
   renderAllThumbs() {
+    const thumbs = this.selectedImages.map((src) => {
+      <img src="{src}" />;
+    });
+    this.thumbs = thumbs;
   }
 }
