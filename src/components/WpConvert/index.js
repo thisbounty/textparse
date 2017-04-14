@@ -12,7 +12,8 @@ export default class WpConvert extends React.Component {
     super(props);
     this.state = {
       input: '',
-      outpt: '',
+      output: '',
+      outputNoImg:'',
       keyword: '',
       images:[
         {
@@ -72,8 +73,10 @@ export default class WpConvert extends React.Component {
 
   handleChange(event) {
     const text = event.target.value;
+    const outputNoImg = WpConvert.parse(text)
     this.setState({ input: text });
-    this.setState({ output: WpConvert.parse(text) });
+    this.setState({ outputNoImg:outputNoImg });
+    this.setState({ output:this.insertImageTags(outputNoImg, this.state.selectedImages) });
   }
 
   handleImageChange(event) {
@@ -92,7 +95,7 @@ export default class WpConvert extends React.Component {
   handleGalleryClick(event) {
     this.selectImage(event);
     this.renderAllThumbs();
-    WpConvert.parse(this.state.input);
+    this.setState({output:this.insertImageTags(this.state.outputNoImg, this.state.selectedImages)});
   }
 
   static parse(text) {
@@ -157,7 +160,7 @@ export default class WpConvert extends React.Component {
     // need to add a different image tag before each pagination
     let sub=text;
     images.forEach(function(img) {
-      sub=sub.replace(/[^>]\n<!--next page-->/, `]\n<img src="${img.url}">\n<!--next page-->`);
+      sub=sub.replace(/[^>]\n<!--next page-->/, `]\n<img src="${img}">\n<!--next page-->`);
     });
     return sub;
   }
