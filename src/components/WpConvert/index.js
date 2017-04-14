@@ -83,9 +83,8 @@ export default class WpConvert extends React.Component {
 
   handleImageRequest(event) {
     if(event.keyCode == 13) {
-      const _wp=this;
       WpConvert.imageRequest(this.state.keyword).then((resp) => {
-        _wp.setState({ output:_wp.insertImageTags(_wp.state.output,resp) })
+        this.setState({images:WpConvert.parseImage(resp)});
       });
     }
   }
@@ -157,7 +156,6 @@ export default class WpConvert extends React.Component {
   insertImageTags(text, images) {
     // need to add a different image tag before each pagination
     let sub=text;
-    console.log(images);
     images.forEach(function(img) {
       sub=sub.replace(/[^>]\n<!--next page-->/, `]\n<img src="${img.url}">\n<!--next page-->`);
     });
@@ -171,9 +169,15 @@ export default class WpConvert extends React.Component {
   }
 
   renderAllThumbs() {
-    let thumbs = this.state.selectedImages.map((src, index) => {
+    const thumbs = this.state.selectedImages.map((src, index) => {
       return <li key={index}><img src={src} style={{width:'200px'}}/></li>;
     });
     this.thumbs = thumbs;
+  }
+
+  static parseImage(request) {
+    return request.map((row) => {
+      return {original:row.url, thumbnail:row.thumb_url};
+    })
   }
 }
