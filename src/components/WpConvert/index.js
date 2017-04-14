@@ -107,14 +107,14 @@ export default class WpConvert extends React.Component {
     // match titles with 3 to 70 characters
     // 3 characters to avoid matching carriage returns
     // 70 as this will be run before format titles
-    return text.replace(/^[^\[<!--].{3,70}$/gm, match => `[sc name="default_top_ad"]\n${match}`);
+    return text.replace(/^[^\[<!--].{3,100}$/gm, match => `[sc name="default_top_ad"]\n${match}`);
   }
 
   static insertLowerPageShortcodes(text) {
     // match titles, allows for pages with varying paragraph counts
     // match a leading carriage return to prevent adding a lower title at the start of the article
     // no leading carrot allows for single or double space before title
-    text = text.replace(/\n^[^\[].{3,70}$/gm, match => `\n[sc name="default_lower_ad"]${match}`);
+    text = text.replace(/\n^[^\[].{3,100}$/gm, match => `\n[sc name="default_lower_ad"]${match}`);
     return `${text}\n[sc name="default_lower_ad"]`;
   }
 
@@ -127,7 +127,7 @@ export default class WpConvert extends React.Component {
     // first \n is to prevent a page break at the top of the first page
     // exclude in brackets [] prevents other shortcodes => \[ from being treated as a title
     // exclude \n prevents extra shortcodes from being entered as spaces
-    return text.replace(/\n^[^\[].{3,70}$/gm, match => `\n<!--next page-->\n${match}`);
+    return text.replace(/\n^[^\[].{3,100}$/gm, match => `\n<!--next page-->\n${match}`);
   }
 
   static formatTitles(text) {
@@ -135,7 +135,7 @@ export default class WpConvert extends React.Component {
     // 3 characters to avoid matching carriage returns
     // skip fields that have shortcodes already with [^\]]
     // dot selector brings in carriage return to match, need to exclude with [^\n], added to closing bracket
-    return text.replace(/^[^\[\n\<!].{3,70}$/gm, (match) => `[post_page_title]${match.replace('','')}[/post_page_title]` );
+    return text.replace(/^[^\[\n\<!].{3,100}$/gm, (match) => `[post_page_title]${match.replace('','')}[/post_page_title]` );
   }
 
   static insertArticleShortcodes(text) {
