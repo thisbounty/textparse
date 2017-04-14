@@ -89,9 +89,9 @@ export default class WpConvert extends React.Component {
   }
 
   handleGalleryClick(event) {
-    let images = this.state.selectedImages;
-    images.push(event.target.getAttribute('src'));
-    this.setState({selectedImages:images});
+    this.selectImage(event);
+    this.renderAllThumbs();
+    this.parse(this.state.input);
   }
 
   static parse(text) {
@@ -160,5 +160,14 @@ export default class WpConvert extends React.Component {
       sub=sub.replace(/[^>]\n<!--next page-->/, `]\n<img src="${img.url}">\n<!--next page-->`);
     });
     return sub;
+  }
+
+  selectImage(event) {
+    let images = this.state.selectedImages;
+    images.push(event.target.getAttribute('src'));
+    this.setState({selectedImages:images});
+  }
+
+  renderAllThumbs() {
   }
 }
